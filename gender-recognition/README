@@ -1,0 +1,18 @@
+
+"""
+description ; the different files and the description of what they do
+author : taycir yahmed 
+"""
+
+To run any of the following files, type in the terminal: python <name-of-file>
+ATTENTION: before running the files please add the data files in the folder 'data'
+
+The file "weightedcrossvalscore.py" : the script to determine the weighted cross validated scores for many classifiers in order to determine the 3 best classifiers
+The file "svc_tuning.py" : the script to determine the best parameters for svc.
+The file "stacking.py" : this script implements an idea of stacking 
+The file "recursiveFeatureSelection.py" : this script implements recursive feature selection
+The file "newwayofstacking.py" : this script implements another method of stacking
+The file "nn_tuning.py" : this script implements hyperparameters tuning for multiple layer perceptron
+The file "lr_tuning.py" : this script implements hyperparameters tuning for logistic regression
+The file "index.py" : this script implements the main script leading to the best results 
+The file "bagging_gridsearch.py" : the script implementing the tuning for bagging parameters

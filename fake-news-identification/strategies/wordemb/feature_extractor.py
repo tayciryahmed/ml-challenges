@@ -20,6 +20,7 @@ import re
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 
+
 def clean_str(string, tolower=True):
 
     string = re.sub(r"[^A-Za-z0-9(),!?\'\`]", " ", string)
@@ -41,11 +42,13 @@ def clean_str(string, tolower=True):
     string.strip()
     stemmer = SnowballStemmer('english')
     string = set(string.split(" "))
-    string = [token_processor(stemmer,item) for item in string]
+    string = [token_processor(stemmer, item) for item in string]
     return ' '.join(string)
 
-def token_processor(stemmer,token):
+
+def token_processor(stemmer, token):
     return stemmer.stem(token)
+
 
 class FeatureExtractor():
     def __init__(self):

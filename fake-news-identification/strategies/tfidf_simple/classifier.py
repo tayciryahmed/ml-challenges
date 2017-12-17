@@ -3,6 +3,7 @@ from sklearn.base import BaseEstimator
 import numpy as np
 from sklearn.neural_network import MLPClassifier
 
+
 class Classifier(BaseEstimator):
     def __init__(self):
         self.clf = MLPClassifier(hidden_layer_sizes=(150))

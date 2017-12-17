@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from sklearn.base import BaseEstimator
-from sklearn.ensemble import RandomForestClassifier , BaggingClassifier
+from sklearn.ensemble import RandomForestClassifier, BaggingClassifier
 from sklearn.linear_model import LogisticRegression
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, LSTM
@@ -8,7 +8,7 @@ import numpy as np
 from sklearn.neural_network import MLPClassifier
 import pandas as pd
 from sklearn.base import BaseEstimator
-from sklearn.ensemble import RandomForestClassifier , BaggingClassifier
+from sklearn.ensemble import RandomForestClassifier, BaggingClassifier
 from sklearn.linear_model import LogisticRegression
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, LSTM
@@ -37,41 +37,38 @@ from keras.layers import Dense, Input, GlobalMaxPooling1D
 from keras.layers import Conv1D, MaxPooling1D, Embedding
 from keras.models import Model
 
+
 class Classifier(BaseEstimator):
     def __init__(self):
         self.model = Sequential()
-
-
-
 
     def fit(self, X, y):
 
         print X.shape
 
-        X = X.reshape((X.shape[0],X.shape[1] , 300))
+        X = X.reshape((X.shape[0], X.shape[1], 300))
 
         document_max_num_words = 100
         num_categories = 6
         num_features = X.shape[1]
 
-        self.model.add(LSTM(int(document_max_num_words*1.5), input_shape=X.shape[1:]))
+        self.model.add(
+            LSTM(int(document_max_num_words * 1.5), input_shape=X.shape[1:]))
 
         self.model.add(Dense(num_categories))
         self.model.add(Activation('sigmoid'))
         self.model.compile(loss='categorical_crossentropy',
-                      optimizer='rmsprop',
-                      metrics=['acc'])
+                           optimizer='rmsprop',
+                           metrics=['acc'])
 
         Y = np.array(pd.get_dummies(y))
 
         self.model.fit(X, Y, batch_size=128, epochs=20)
 
-
     def predict(self, X):
-        X = X.reshape((X.shape[0],X.shape[1] , 300))
+        X = X.reshape((X.shape[0], X.shape[1], 300))
         return self.model.predict_classes(X, batch_size=32, verbose=1)
 
-
     def predict_proba(self, X):
-        X = X.reshape((X.shape[0],X.shape[1] , 300))
+        X = X.reshape((X.shape[0], X.shape[1], 300))
         return self.model.predict_proba(X, batch_size=32, verbose=0)

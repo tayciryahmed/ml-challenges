@@ -54,7 +54,6 @@ class Classifier(BaseEstimator):
 
         f = open('submissions/wordemb/glove.6B/glove.6B.300d.txt')
 
-
         for line in f:
         	values = line.split()
         	word = values[0]

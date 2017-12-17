@@ -24,7 +24,8 @@ from nltk.corpus import stopwords
 
 svd = TruncatedSVD(n_components=3000)
 
-def clean_str(string,cachedStopWords, tolower=True):
+
+def clean_str(string, cachedStopWords, tolower=True):
     string = re.sub(r"[^A-Za-z0-9(),!?\'\`]", " ", string)
     string = re.sub(r"\'s", " \'s", string)
     string = re.sub(r"\'ve", " \'ve", string)
@@ -47,6 +48,7 @@ def clean_str(string,cachedStopWords, tolower=True):
     string = [word for word in string if word not in cachedStopWords]
     return ' '.join(string)
 
+
 def document_preprocessor(doc):
     # TODO: is there a way to avoid these encode/decode calls?
     """try:
@@ -65,7 +67,6 @@ def token_processor(tokens):
         yield stemmer.stem(token)
 
 
-
 class FeatureExtractor():
 
     def __init__(self):
@@ -77,7 +78,7 @@ class FeatureExtractor():
         self.document_max_num_words = 100
 
         dire = 'submissions/wordemb/glove.6B/'
-        glove_input_file = dire+'glove.6B.300d.txt'
+        glove_input_file = dire + 'glove.6B.300d.txt'
         word2vec_output_file = 'glove.6B.300d.txt.word2vec'
         glove2word2vec(glove_input_file, word2vec_output_file)
 
@@ -92,20 +93,20 @@ class FeatureExtractor():
 
     def transform(self, X_df):
 
-
-
         cachedStopWords = stopwords.words("english")
 
-        #gensim
+        # gensim
         number_of_documents = len(X_df)
-        X = np.zeros(shape=(number_of_documents, self.document_max_num_words, self.num_features)).astype(float)
+        X = np.zeros(shape=(number_of_documents,
+                            self.document_max_num_words, self.num_features)).astype(float)
 
         empty_word = np.zeros(self.num_features).astype(float)
 
         for idx, document in enumerate(X_df.statement[:number_of_documents]):
 
             document = clean_str(document, cachedStopWords)
-            if idx ==0 : print document
+            if idx == 0:
+                print document
             for jdx, word in enumerate(document):
                 if jdx == self.document_max_num_words:
                     break
@@ -115,7 +116,7 @@ class FeatureExtractor():
                         X[idx, jdx, :] = self.model[word]
                     else:
                         X[idx, jdx, :] = empty_word
-        print X[0,:,:]
+        print X[0, :, :]
 
         return X
 
